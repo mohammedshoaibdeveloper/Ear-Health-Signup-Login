@@ -22,6 +22,8 @@ from rest_framework import status
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.renderers import TemplateHTMLRenderer
+
 # Create your views here.
 
 # class SignupView(APIView):
@@ -149,5 +151,17 @@ class EditView(APIView):
             }
             return Response(message)
    
+
+class ProfileList(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'index.html'
+
+    def get(self, request):
+        queryset = Health_Professional_Account.objects.all()
+        message = {
+            'profiles': queryset
+        }
+        print(message)
+        return Response(message)
 
 
